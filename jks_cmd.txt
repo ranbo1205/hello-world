@@ -1,0 +1,33 @@
+-Generate keys
+-keytool -genkeypair -alias serverkey -keyalg RSA -dname "CN=Web Server,OU=Server_OU,O=Server_O,L=HK,S=HK,C=HK" -keypass 123456 -keystore server.jks -storepass 123456
+-keytool -genkeypair -alias clientkey -keyalg RSA -dname "CN=FR12345,OU=Client_OU,O=Client_O,L=SG,S=SG,C=SG" -keypass 234567 -keystore client.jks -storepass 234567
+
+-Export the client's public cert and import it into the server's keystore
+-keytool -exportcert -alias clientkey -file client_public.cer -keystore client.jks -storepass 234567
+-keytool -importcert -keystore server.jks -alias clientcert -file client_public.cer -storepass 123456 -noprompt
+-# view the contents of keystore (use -v for verbose output)
+-keytool -list -keystore server.jks -storepass 123456 -v           
+
+-Export the server public cert and import it to client's keystore
+-keytool -exportcert -alias serverkey -file server_public.cer -keystore server.jks -storepass 123456
+-keytool -importcert -keystore client.jks -alias serverkey -file server_public.cer -storepass 234567 -noprompt
+-# view the contents of keystore (use -v for verbose output)
+-keytool -list -keystore client.jks -storepass 234567 -v
+
+
+
+
+
+D:
+cd study\jks
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -genkeypair -alias serverkey -keyalg RSA -dname "CN=Web Server,OU=Server_OU,O=Server_O,L=HK,S=HK,C=HK" -keypass 123456 -keystore server.jks -storepass 123456
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -genkeypair -alias clientkey -keyalg RSA -dname "CN=FR12345,OU=Client_OU,O=Client_O,L=SG,S=SG,C=SG" -keypass 234567 -keystore client.jks -storepass 234567
+
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -exportcert -alias clientkey -file client_public.cer -keystore client.jks -storepass 234567
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -importcert -keystore server.jks -alias clientcert -file client_public.cer -storepass 123456 -noprompt
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -list -keystore server.jks -storepass 123456 -v
+
+
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -exportcert -alias serverkey -file server_public.cer -keystore server.jks -storepass 123456
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -importcert -keystore client.jks -alias serverkey -file server_public.cer -storepass 234567 -noprompt
+"C:\Program Files\Java\jdk1.8.0_181\bin\keytool.exe" -list -keystore client.jks -storepass 234567 -v
